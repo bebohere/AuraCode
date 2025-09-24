@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraCode</title>
+  <style>
+    @media (max-width: 700px) {
+  nav {
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+  }
+  nav .logo {
+    font-size: 1.3rem;
+  }
+  nav ul {
+    gap: 0.7rem;
+  }
+  nav ul li a {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.7rem;
+  }
+  #langBtn {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-brand {
+    font-size: 1.5rem;
+  }
+  .hero-desc {
+    font-size: 0.98rem;
+    padding: 0 0.5rem;
+  }
+  .hero-cta, .cta {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+  }
+  .features-list, .work-list, .pricing-list {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+  }
+  .feature-box, .work-box, .pricing-box {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+  }
+  .pricing-box h3, .feature-box h3, .work-box h3 {
+    font-size: 1rem;
+  }
+  .price {
+    font-size: 1.2rem;
+  }
+  .contact {
+    max-width: 98vw;
+    padding: 0 0.5rem 2rem 0.5rem;
+  }
+  .contact h2 {
+    font-size: 1.2rem;
+  }
+  .contact-info {
+    font-size: 0.95rem;
+  }
+  .contact-modal {
+    max-width: 98vw !important;
+    padding: 1.2rem 0.5rem 1rem 0.5rem !important;
+  }
+  .contact-modal h2 {
+    font-size: 1.1rem !important;
+  }
+  .contact-modal p {
+    font-size: 0.95rem !important;
+  }
+  .contact-modal a {
+    font-size: 1rem !important;
+    padding: 0.7rem 0.2rem !important;
+    min-width: 90px;
+  }
+}
+.hero-bg-animate {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 180px;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(60px) brightness(1.2);
+  background: radial-gradient(circle at 60% 40%, #4fc3f7 0%, #1a237e 80%, transparent 100%);
+  opacity: 0.7;
+  animation: bgPulse 3.5s infinite alternate;
+}
+@keyframes bgPulse {
+  0% { opacity: 0.7; filter: blur(60px) brightness(1.2); }
+  100% { opacity: 1; filter: blur(80px) brightness(1.5); }
+}
+
+.hero-title, .hero-brand, .hero-desc, .hero-cta {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-brand {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #4fc3f7;
+  margin-top: 0.2em;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 24px #4fc3f799, 0 0 16px #4fc3f7, 0 0 32px #4fc3f7;
+  animation: neonGlow 2.5s infinite alternate;
+}
+@keyframes neonGlow {
+  0% { text-shadow: 0 2px 24px #4fc3f799, 0 0 16px #4fc3f7, 0 0 32px #4fc3f7; }
+  100% { text-shadow: 0 2px 32px #4fc3f7cc, 0 0 32px #4fc3f7, 0 0 64px #4fc3f7; }
+}
+
+.hero-cta {
+  background: linear-gradient(90deg, #4fc3f7 0%, #1a237e 100%);
+  color: #fff;
+  border: none;
+  padding: 1.1rem 3.5rem;
+  border-radius: 16px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 32px 0 #4fc3f799, 0 0 0 0 #4fc3f7;
+  margin-top: 1.2rem;
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.hero-cta:hover {
+  box-shadow: 0 8px 40px 0 #4fc3f799, 0 0 32px 8px #4fc3f7;
+  background: linear-gradient(90deg, #1a237e 0%, #4fc3f7 100%);
+  transform: scale(1.04) translateY(-2px);
+}
+
+/* Fade-in animation for hero */
+.hero-title, .hero-brand, .hero-desc, .hero-cta {
+  opacity: 0;
+  animation: fadeInUp 1.2s forwards;
+}
+.hero-title { animation-delay: 0.1s; }
+.hero-brand { animation-delay: 0.5s; }
+.hero-desc { animation-delay: 0.9s; }
+.hero-cta { animation-delay: 1.3s; }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-center {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+/* Hero Section (Landing Page) */
+.hero-center {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.7rem;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-shadow: 0 2px 24px #1a237e55;
+}
+.hero-brand {
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #4fc3f7;
+  margin-top: 0.2em;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 24px #4fc3f799;
+}
+.hero-desc {
+  font-size: 1.1rem;
+  color: #e3e8f7;
+  margin-bottom: 2.5rem;
+  margin-top: 0.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 2px 12px #1a237e33;
+}
+.hero-cta {
+  background: #e3f2fd;
+  color: #1a237e;
+  border: none;
+  padding: 1.1rem 3.5rem;
+  border-radius: 16px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 32px 0 #4fc3f799;
+  margin-top: 1.2rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.hero-cta:hover {
+  background: #4fc3f7;
+  color: #fff;
+  box-shadow: 0 8px 40px 0 #4fc3f799;
+}
+/* Our Work Section */
+.ourwork {
+  margin: 5rem auto 3rem auto;
+  max-width: 1100px;
+  padding: 0 1rem;
+}
+.ourwork h2 {
+  color: #4fc3f7;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 24px #1a237e55;
+}
+.work-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.work-box {
+  background: linear-gradient(120deg, #101c3c 60%, #1a237e 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 #1a237e33;
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  min-width: 220px;
+  max-width: 270px;
+  flex: 1 1 220px;
+  color: #e3e8f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.work-box:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 40px 0 #4fc3f799;
+}
+.work-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #4fc3f7 30%, #1a237e 100%);
+  box-shadow: 0 2px 16px #4fc3f799;
+}
+.demo1 { background-image: url('https://dummyimage.com/80x80/4fc3f7/fff&text=EC'); }
+.demo2 { background-image: url('https://dummyimage.com/80x80/1a237e/fff&text=LP'); }
+.demo3 { background-image: url('https://dummyimage.com/80x80/232b4d/fff&text=BL'); }
+.work-box h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+  color: #fff;
+}
+.work-box p {
+  font-size: 1rem;
+  color: #b0b8d9;
+  margin: 0;
+  text-align: center;
+}
+
+/* Pricing Section */
+.pricing {
+  margin: 5rem auto 3rem auto;
+  max-width: 1100px;
+  padding: 0 1rem;
+}
+.pricing h2 {
+  color: #4fc3f7;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 24px #1a237e55;
+}
+.pricing-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.pricing-box {
+  background: linear-gradient(120deg, #101c3c 60%, #1a237e 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 #1a237e33;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 220px;
+  max-width: 270px;
+  flex: 1 1 220px;
+  color: #e3e8f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+.pricing-box.best {
+  border: 2px solid #4fc3f7;
+  box-shadow: 0 8px 40px 0 #4fc3f799;
+}
+.pricing-box h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+  color: #fff;
+}
+.price {
+  font-size: 2rem;
+  color: #4fc3f7;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+.pricing-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem 0;
+  color: #b0b8d9;
+  text-align: center;
+}
+.pricing-box ul li {
+  margin-bottom: 0.5rem;
+}
+.cta.small {
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+}
+
+/* Contact Section */
+.contact {
+  margin: 5rem auto 3rem auto;
+  max-width: 600px;
+  padding: 0 1rem 3rem 1rem;
+  text-align: center;
+}
+.contact h2 {
+  color: #4fc3f7;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 24px #1a237e55;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.contact-form input,
+.contact-form textarea {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #232b4d;
+  color: #fff;
+  font-size: 1rem;
+  resize: none;
+}
+.contact-form textarea {
+  min-height: 90px;
+  max-height: 200px;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid #4fc3f7;
+}
+.contact-info {
+  color: #b0b8d9;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+.contact-info span {
+  margin: 0 0.5rem;
+}
+
+/* Smooth Scroll for nav links */
+html {
+  scroll-behavior: smooth;
+}
+/* Features Section */
+.features {
+  margin: 5rem auto 3rem auto;
+  max-width: 1100px;
+  padding: 0 1rem;
+}
+.features h2 {
+  color: #4fc3f7;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 24px #1a237e55;
+}
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.feature-box {
+  background: linear-gradient(120deg, #101c3c 60%, #1a237e 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 #1a237e33;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 220px;
+  max-width: 270px;
+  flex: 1 1 220px;
+  color: #e3e8f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-box:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 40px 0 #4fc3f799;
+}
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #4fc3f7;
+  text-shadow: 0 2px 24px #4fc3f799;
+}
+.feature-box h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+  color: #fff;
+}
+.feature-box p {
+  font-size: 1rem;
+  color: #b0b8d9;
+  margin: 0;
+  text-align: center;
+}
+body {
+  margin: 0;
+  font-family: 'Tajawal', 'Cairo', Arial, sans-serif;
+  min-height: 100vh;
+  color: #e3e8f7;
+  text-align: center;
+  background: linear-gradient(120deg, #0a1026 0%, #101c3c 60%, #1a237e 100%);
+  background-size: 200% 200%;
+  animation: animatedGradient 8s ease-in-out infinite alternate;
+}
+@keyframes animatedGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.contact-modal.show {
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255,255,255,0.85) !important;
+  box-shadow: 0 8px 48px #4fc3f799, 0 0 0 2px #4fc3f7;
+}
+.contact-modal {
+  backdrop-filter: blur(12px) saturate(160%);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 8px 48px #1a237e33;
+}
+.hero-title {
+  font-family: 'Tajawal', 'Cairo', Arial, sans-serif;
+  /* ...existing code... */
+}
+.hero-brand {
+  font-family: 'Tajawal', 'Cairo', Arial, sans-serif;
+  /* ...existing code... */
+}
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&display=swap');
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background: rgba(10, 16, 38, 0.95);
+  box-shadow: 0 2px 24px 0 rgba(30,60,114,0.10);
+  border-bottom: 1px solid #232b4d;
+}
+nav .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #4fc3f7;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+nav .logo::before {
+  content: "\25B2\25B2";
+  color: #4fc3f7;
+  font-size: 1.5rem;
+  margin-right: 0.3rem;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+nav ul li a {
+  color: #e3e8f7;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+nav ul li a.active, nav ul li a:hover {
+  background: #232b4d;
+  color: #4fc3f7;
+  box-shadow: 0 2px 12px 0 #232b4d33;
+}
+#langBtn {
+  background: linear-gradient(90deg, #4fc3f7 0%, #1a237e 100%);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 12px 0 #4fc3f733;
+  transition: background 0.2s, color 0.2s;
+}
+#langBtn:hover {
+  background: #fff;
+  color: #1a237e;
+}
+main {
+  margin-top: 8vh;
+}
+h1 {
+  font-size: 2.7rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  color: #e3e8f7;
+  text-shadow: 0 2px 24px #1a237e55;
+}
+h1 span {
+  color: #4fc3f7;
+  text-shadow: 0 2px 24px #4fc3f799;
+}
+.desc {
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta {
+  background: linear-gradient(90deg, #4fc3f7 0%, #1a237e 100%);
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 24px 0 #4fc3f744;
+  letter-spacing: 1px;
+  transition: background 0.2s, color 0.2s;
+}
+.cta:hover {
+  background: #fff;
+  color: #1a237e;
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">AuraCode</div>
+    <ul>
+      <li><a href="#" class="active">الرئيسية</a></li>
+      <li><a href="#features">المميزات</a></li>
+      <li><a href="#ourwork">أعمالنا</a></li>
+      <li><a href="#pricing">الأسعار</a></li>
+      <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+  </nav>
+    <main class="hero-center">
+      <div class="hero-bg-animate"></div>
+      <h1 class="hero-title">
+        ابن موقعك الإلكتروني مع
+        <br>
+        <span class="hero-brand">AuraCode</span>
+      </h1>
+      <p class="hero-desc">
+        اختر لك موقعنا الاحترافي جاهز للبيع أونلاين لتصميم فخم بسرعة عالية، أساس قوي للسيو وتجربة مستخدم سهلة تزيد تحويلاتك.
+      </p>
+  <button class="cta hero-cta" id="orderNowBtn">اطلب موقعك الآن</button>
+      <!-- Features Section (Why AuraCode) -->
+      <section class="features" id="features">
+        <h2 class="features-title">
+            لماذا تختار <span style="color:#4fc3f7;">AuraCode؟</span>
+        </h2>
+        <div class="features-list">
+          <div class="feature-box">
+            <div class="feature-icon" style="color:#4fc3f7;filter:drop-shadow(0 0 8px #4fc3f7);">📱</div>
+            <h3>متجاوب مع جميع الأجهزة</h3>
+            <p>تصميم متجاوب يعمل بكفاءة على جميع الشاشات والأجهزة.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon" style="color:#FFD600;filter:drop-shadow(0 0 8px #FFD600);">🔒</div>
+            <h3>حماية متقدمة</h3>
+            <p>نولي أمان بياناتك وموقعك أولوية قصوى مع حلول حماية متقدمة.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon" style="color:#FF1744;filter:drop-shadow(0 0 8px #FF1744);">🚀</div>
+            <h3>سرعة تحميل عالية</h3>
+            <p>مواقعنا مبنية بأحدث التقنيات لضمان سرعة استثنائية وتجربة مستخدم سلسة.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Work Section -->
+      <section class="ourwork" id="ourwork" style="margin-top:4rem;">
+        <h2 style="color:#4fc3f7;font-size:2rem;margin-bottom:2.5rem;">أعمالنا</h2>
+        <div class="work-list" style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;">
+          <div class="work-box" style="background:rgba(10,16,38,0.7);border-radius:18px;box-shadow:0 4px 32px 0 #1a237e33;padding:1.5rem 1.2rem 1.2rem 1.2rem;min-width:220px;max-width:270px;flex:1 1 220px;color:#e3e8f7;display:flex;flex-direction:column;align-items:center;">
+            <div class="work-img" style="width:60px;height:60px;border-radius:16px;margin-bottom:1rem;background:linear-gradient(135deg,#4fc3f7 30%,#1a237e 100%);box-shadow:0 2px 16px #4fc3f799;"></div>
+            <h3 style="font-size:1.1rem;margin-bottom:0.7rem;color:#fff;">متجر إلكتروني عصري</h3>
+            <p style="font-size:1rem;color:#b0b8d9;margin:0;text-align:center;">تصميم متجر إلكتروني متكامل مع بوابات دفع وتكامل شحن.</p>
+          </div>
+          <div class="work-box" style="background:rgba(10,16,38,0.7);border-radius:18px;box-shadow:0 4px 32px 0 #1a237e33;padding:1.5rem 1.2rem 1.2rem 1.2rem;min-width:220px;max-width:270px;flex:1 1 220px;color:#e3e8f7;display:flex;flex-direction:column;align-items:center;">
+            <div class="work-img" style="width:60px;height:60px;border-radius:16px;margin-bottom:1rem;background:linear-gradient(135deg,#1a237e 30%,#4fc3f7 100%);box-shadow:0 2px 16px #4fc3f799;"></div>
+            <h3 style="font-size:1.1rem;margin-bottom:0.7rem;color:#fff;">موقع تعريفي احترافي</h3>
+            <p style="font-size:1rem;color:#b0b8d9;margin:0;text-align:center;">موقع تعريفي سريع وجذاب للشركات أو الأفراد.</p>
+          </div>
+          <div class="work-box" style="background:rgba(10,16,38,0.7);border-radius:18px;box-shadow:0 4px 32px 0 #1a237e33;padding:1.5rem 1.2rem 1.2rem 1.2rem;min-width:220px;max-width:270px;flex:1 1 220px;color:#e3e8f7;display:flex;flex-direction:column;align-items:center;">
+            <div class="work-img" style="width:60px;height:60px;border-radius:16px;margin-bottom:1rem;background:linear-gradient(135deg,#232b4d 30%,#4fc3f7 100%);box-shadow:0 2px 16px #4fc3f799;"></div>
+            <h3 style="font-size:1.1rem;margin-bottom:0.7rem;color:#fff;">مدونة أو منصة محتوى</h3>
+            <p style="font-size:1rem;color:#b0b8d9;margin:0;text-align:center;">منصة تدوين أو محتوى قابلة للتخصيص مع لوحة تحكم سهلة.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section class="pricing" id="pricing" style="margin-top:4rem;">
+        <h2 style="color:#4fc3f7;font-size:2rem;margin-bottom:2.5rem;">
+          الأسعار
+        </h2>
+        <div class="pricing-list" style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;">
+          <div class="pricing-box" style="background:rgba(10,16,38,0.7);border-radius:18px;box-shadow:0 4px 32px 0 #1a237e33;padding:2rem 1.5rem 1.5rem 1.5rem;min-width:220px;max-width:270px;flex:1 1 220px;color:#e3e8f7;display:flex;flex-direction:column;align-items:center;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.7rem;color:#fff;">
+              باقة ستارت
+            </h3>
+            <div class="price" style="font-size:2rem;color:#4fc3f7;margin-bottom:1rem;font-weight:bold;">
+                2500 جنيه <span style="font-size:1.1rem;color:#b0b8d9;">(~52$)</span>
+            </div>
+            <ul style="list-style:none;padding:0;margin:0 0 1.2rem 0;color:#b0b8d9;text-align:center;">
+              <li style="margin-bottom:0.5rem;">موقع صفحة واحدة احترافي</li>
+              <li style="margin-bottom:0.5rem;">تصميم متجاوب</li>
+              <li style="margin-bottom:0.5rem;">دعم فني شهر</li>
+            </ul>
+            <button class="cta small order-btn" style="font-size:1rem;padding:0.7rem 1.5rem;border-radius:8px;">
+              اطلب الآن
+            </button>
+          </div>
+          <div class="pricing-box best" style="background:rgba(10,16,38,0.9);border-radius:18px;box-shadow:0 8px 40px 0 #4fc3f799;padding:2rem 1.5rem 1.5rem 1.5rem;min-width:220px;max-width:270px;flex:1 1 220px;color:#e3e8f7;display:flex;flex-direction:column;align-items:center;border:2px solid #4fc3f7;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.7rem;color:#fff;">
+              باقة بزنس
+            </h3>
+            <div class="price" style="font-size:2rem;color:#4fc3f7;margin-bottom:1rem;font-weight:bold;">
+                6000 جنيه <span style="font-size:1.1rem;color:#b0b8d9;">(~125$)</span>
+            </div>
+            <ul style="list-style:none;padding:0;margin:0 0 1.2rem 0;color:#b0b8d9;text-align:center;">
+              <li style="margin-bottom:0.5rem;">موقع متعدد الصفحات (حتى 7 صفحات)</li>
+              <li style="margin-bottom:0.5rem;">تكامل مع واتساب/نموذج تواصل</li>
+              <li style="margin-bottom:0.5rem;">دعم فني 3 شهور</li>
+            </ul>
+            <button class="cta small order-btn" style="font-size:1rem;padding:0.7rem 1.5rem;border-radius:8px;">
+              اطلب الآن
+            </button>
+          </div>
+          <div class="pricing-box" style="background:rgba(10,16,38,0.7);border-radius:18px;box-shadow:0 4px 32px 0 #1a237e33;padding:2rem 1.5rem 1.5rem 1.5rem;min-width:220px;max-width:270px;flex:1 1 220px;color:#e3e8f7;display:flex;flex-direction:column;align-items:center;">
+            <h3 style="font-size:1.2rem;margin-bottom:0.7rem;color:#fff;">
+              باقة بروفيشنال
+            </h3>
+            <div class="price" style="font-size:2rem;color:#4fc3f7;margin-bottom:1rem;font-weight:bold;">
+                12000 جنيه <span style="font-size:1.1rem;color:#b0b8d9;">(~250$)</span>
+            </div>
+            <ul style="list-style:none;padding:0;margin:0 0 1.2rem 0;color:#b0b8d9;text-align:center;">
+              <li style="margin-bottom:0.5rem;">متجر إلكتروني متكامل مع دفع وشحن</li>
+              <li style="margin-bottom:0.5rem;">لوحة تحكم سهلة</li>
+              <li style="margin-bottom:0.5rem;">دعم فني 6 شهور</li>
+            </ul>
+            <button class="cta small order-btn" style="font-size:1rem;padding:0.7rem 1.5rem;border-radius:8px;">
+              اطلب الآن
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact" id="contact" style="margin-top:4rem;max-width:600px;margin-left:auto;margin-right:auto;text-align:center;">
+        <h2 style="color:#4fc3f7;font-size:2rem;margin-bottom:2.5rem;">
+          تواصل معنا
+        </h2>
+          <button id="openContactModalBtn" class="cta hero-cta" style="margin:2rem auto 1.5rem auto;display:block;font-size:1.2rem;min-width:220px;">
+            تواصل عبر المنصات
+          </button>
+          <div class="contact-info" style="color:#b0b8d9;font-size:1rem;margin-top:1rem;">
+            <span>info@auracode.com</span> | <span>+201234567890</span>
+          </div>
+      </section>
+    </main>
+  <!-- Contact Modal -->
+  <div id="contact-modal-overlay" style="display:none;position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(10,16,38,0.65);align-items:center;justify-content:center;">
+    <div id="contact-modal" class="contact-modal" style="background:#fff;border-radius:22px;box-shadow:0 8px 48px #1a237e33;max-width:420px;width:95vw;padding:2.2rem 1.2rem 1.5rem 1.2rem;position:relative;transition:all 0.3s cubic-bezier(.4,2,.6,1);opacity:0;transform:translateY(-40px) scale(0.98);">
+      <button id="contact-modal-close" style="position:absolute;top:1.1rem;left:1.1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#232b4d;opacity:0.7;">&times;</button>
+      <h2 style="text-align:center;font-size:1.3rem;font-weight:bold;color:#232b4d;margin-bottom:0.7rem;letter-spacing:0.5px;">
+        طرق التواصل السريعة
+      </h2>
+      <p style="text-align:center;color:#444;font-size:1rem;margin-bottom:1.5rem;">
+        اختر القناة المفضلة، وسنرد عليك بالرابط النهائي لاحقًا.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="https://wa.me/201234567890" target="_blank" style="flex:1 1 120px;display:flex;align-items:center;justify-content:center;background:#25d366;color:#fff;font-weight:bold;font-size:1.1rem;padding:0.8rem 0.5rem;border-radius:12px;box-shadow:0 2px 16px #25d36644;text-decoration:none;transition:background 0.2s;">
+      <span style="display:inline-flex;align-items:center;margin-left:0.5rem;">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><circle cx="16" cy="16" r="16" fill="#25D366"/><path d="M23.6 8.4A9.94 9.94 0 0 0 16 6a10 10 0 0 0-8.7 14.9L6 26l5.2-1.3A10 10 0 0 0 16 26a10 10 0 0 0 7.6-17.6zm-7.6 15.2a8.2 8.2 0 0 1-4.2-1.2l-0.3-0.2-3.1 0.8 0.8-3-0.2-0.3A8.2 8.2 0 1 1 16 23.6zm4.5-6.2c-0.2-0.1-1.2-0.6-1.4-0.7s-0.3-0.1-0.5 0.1-0.6 0.7-0.7 0.8-0.3 0.2-0.5 0.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-0.1-0.2 0-0.4 0.1-0.5s0.2-0.3 0.3-0.4a0.5 0.5 0 0 0 0.1-0.5c0-0.1-0.5-1.2-0.7-1.6s-0.4-0.3-0.5-0.3h-0.4a0.5 0.5 0 0 0-0.4 0.2c-0.2 0.2-0.6 0.6-0.6 1.5s0.6 1.7 0.7 1.8a9.2 9.2 0 0 0 3.2 3.2c0.1 0.1 0.7 0.3 1.2 0.3s1.1-0.2 1.2-0.4 0.6-0.7 0.7-0.9 0.1-0.4 0-0.5z" fill="#fff"/></svg>
+      </span>
+      واتساب
+    </a>
+  <a href="https://www.facebook.com/auracode" target="_blank" style="flex:1 1 120px;display:flex;align-items:center;justify-content:center;background:#5865F2;color:#fff;font-weight:bold;font-size:1.1rem;padding:0.8rem 0.5rem;border-radius:12px;box-shadow:0 2px 16px #5865F244;text-decoration:none;transition:background 0.2s;">
+      <span style="display:inline-flex;align-items:center;margin-left:0.5rem;">
+  <svg width="20" height="20" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M60.104 4.552A58.568 58.568 0 0 0 46.852.8a.112.112 0 0 0-.118.056c-2.048 3.66-4.32 8.447-5.92 12.24-7.04-1.056-13.888-1.056-20.864 0-1.6-3.84-3.872-8.58-5.92-12.24A.112.112 0 0 0 13.148.8a58.6 58.6 0 0 0-13.252 3.752.104.104 0 0 0-.048.04C-2.36 19.552-3.68 34.24-2.96 48.864a.11.11 0 0 0 .04.08c5.56 4.08 10.96 6.56 16.28 8.24a.112.112 0 0 0 .124-.04c1.252-1.72 2.372-3.54 3.34-5.44a.112.112 0 0 0-.06-.156c-1.78-.68-3.48-1.48-5.16-2.4a.112.112 0 0 1-.012-.188c.348-.264.696-.536 1.032-.808a.112.112 0 0 1 .116-.012c10.84 4.96 22.56 4.96 33.36 0a.112.112 0 0 1 .116-.012c.336.272.684.544 1.032.808a.112.112 0 0 1-.012.188c-1.68.92-3.38 1.72-5.16 2.4a.112.112 0 0 0-.06.156c.968 1.9 2.088 3.72 3.34 5.44a.112.112 0 0 0 .124.04c5.32-1.68 10.72-4.16 16.28-8.24a.112.112 0 0 0 .04-.08c.84-14.624-.56-29.312-5.104-44.272a.104.104 0 0 0-.048-.04zM23.48 37.36c-3.24 0-5.88-2.96-5.88-6.6 0-3.64 2.6-6.6 5.88-6.6 3.3 0 5.92 2.96 5.88 6.6 0 3.64-2.6 6.6-5.88 6.6zm24.04 0c-3.24 0-5.88-2.96-5.88-6.6 0-3.64 2.6-6.6 5.88-6.6 3.3 0 5.92 2.96 5.88 6.6 0 3.64-2.6 6.6-5.88 6.6z" fill="#fff"/>
+        </svg>
+      </span>
+      ديسكورد
+    </a>
+    <a href="https://www.tiktok.com/@auracode26?_t=ZS-8zwpp0RCrF1&_r=1" target="_blank" style="flex:1 1 120px;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;font-weight:bold;font-size:1.1rem;padding:0.8rem 0.5rem;border-radius:12px;box-shadow:0 2px 16px #1114;text-decoration:none;transition:background 0.2s;">
+      <span style="display:inline-flex;align-items:center;margin-left:0.5rem;">
+        <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <rect width="48" height="48" rx="24" fill="#111"/>
+          <path d="M32.5 20.5c-2.1 0-3.8-1.7-3.8-3.8V14h-3.7v15.7a3.8 3.8 0 1 1-3.8-3.8c0-.1 0-.3 0-.4h-3.7c0 .1 0 .3 0 .4a7.5 7.5 0 1 0 7.5 7.5V26c.5.1 1 .2 1.6.2.8 0 1.6-.1 2.3-.3v-3.7c-.5 0-1 0-1.6-.1z" fill="#fff"/>
+          <path d="M28.7 14v2.7c0 2.1 1.7 3.8 3.8 3.8.1 0 .3 0 .4 0v-2.2c-.1 0-.3 0-.4 0-2.1 0-3.8-1.7-3.8-3.8z" fill="#25F4EE"/>
+          <path d="M32.5 20.5c-2.1 0-3.8-1.7-3.8-3.8V14h-3.7v15.7a3.8 3.8 0 1 1-3.8-3.8c0-.1 0-.3 0-.4h-3.7c0 .1 0 .3 0 .4a7.5 7.5 0 1 0 7.5 7.5V26c.5.1 1 .2 1.6.2.8 0 1.6-.1 2.3-.3v-3.7c-.5 0-1 0-1.6-.1z" fill="#FE2C55"/>
+          <path d="M32.5 20.5c-2.1 0-3.8-1.7-3.8-3.8V14h-1.9v15.7a3.8 3.8 0 1 1-3.8-3.8c0-.1 0-.3 0-.4h-1.9c0 .1 0 .3 0 .4a7.5 7.5 0 1 0 7.5 7.5V26c.5.1 1 .2 1.6.2.8 0 1.6-.1 2.3-.3v-3.7c-.5 0-1 0-1.6-.1z" fill="#fff" fill-opacity=".2"/>
+        </svg>
+      </span>
+      تيك توك
+    </a>
+      </div>
+    </div>
+  </div>
+  <style>
+    .contact-modal.show {
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+    }
+    .contact-modal {
+      opacity: 0;
+      transform: translateY(-40px) scale(0.98);
+      transition: all 0.3s cubic-bezier(.4,2,.6,1);
+    }
+  </style>
+  <footer style="width:100%;text-align:center;padding:1.2rem 0 0.7rem 0;color:#b0b8d9;font-size:1rem;letter-spacing:0.5px;">
+    © 2025 AuraCode. جميع الحقوق محفوظة.
+  </footer>
+  <script>
+// Modal logic for contact quick links
+function openContactModal() {
+  document.getElementById('contact-modal-overlay').style.display = 'flex';
+  setTimeout(() => {
+    document.getElementById('contact-modal').classList.add('show');
+  }, 10);
+}
+function closeContactModal() {
+  document.getElementById('contact-modal').classList.remove('show');
+  setTimeout(() => {
+    document.getElementById('contact-modal-overlay').style.display = 'none';
+  }, 300);
+}
+// Attach event
+setTimeout(() => {
+  // زر الهيرو
+  const btn = document.getElementById('orderNowBtn') || document.querySelector('.hero-cta');
+  if(btn) btn.onclick = openContactModal;
+  // أزرار اطلب الآن في الباقات
+  document.querySelectorAll('.order-btn').forEach(function(orderBtn) {
+    orderBtn.onclick = openContactModal;
+  });
+  // زر تواصل معنا الجديد
+  const contactBtn = document.getElementById('openContactModalBtn');
+  if(contactBtn) contactBtn.onclick = openContactModal;
+  // زر إغلاق المودال
+  const closeBtn = document.getElementById('contact-modal-close');
+  if(closeBtn) closeBtn.onclick = closeContactModal;
+  // إغلاق عند الضغط خارج المودال
+  document.getElementById('contact-modal-overlay').onclick = function(e) {
+    if(e.target === this) closeContactModal();
+  };
+}, 100);
+
+// حركة زر الهيرو مع الماوس
+const heroCta = document.querySelector('.hero-cta');
+if(heroCta) {
+  heroCta.addEventListener('mousemove', function(e) {
+    const rect = heroCta.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    heroCta.style.boxShadow = `0 4px 32px 0 #4fc3f799, 0 0 32px 8px #4fc3f7, ${x-rect.width/2}px ${y-rect.height/2}px 40px 0 #4fc3f7aa`;
+  });
+  heroCta.addEventListener('mouseleave', function() {
+    heroCta.style.boxShadow = '0 4px 32px 0 #4fc3f799, 0 0 0 0 #4fc3f7';
+  });
+}
+// حركة دخول سلسة للنصوص (احتياط)
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.hero-title, .hero-brand, .hero-desc, .hero-cta').forEach(function(el) {
+    el.style.opacity = '';
+    el.style.transform = '';
+  });
+});
+
+// Always scroll to top on page load (prevents jumping to #hash sections)
+window.addEventListener('DOMContentLoaded', function() {
+  if (window.location.hash) {
+    window.scrollTo(0, 0);
+    history.replaceState(null, null, window.location.pathname);
+  }
+});
+  </script>
+</body>
+</html>
